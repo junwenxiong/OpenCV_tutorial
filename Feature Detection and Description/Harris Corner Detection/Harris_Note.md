@@ -157,7 +157,7 @@ if cv2.waitKey(0) & 0xff == 27:
 
 [1] [Harris角点检测原理](https://www.cnblogs.com/zyly/p/9508131.html#_labelTop)
 
-[2] [Harris角点检测][https://www.cnblogs.com/ronny/p/4009425.html]
+[2] [Harris角点检测](https://www.cnblogs.com/ronny/p/4009425.html)
 
 
 
