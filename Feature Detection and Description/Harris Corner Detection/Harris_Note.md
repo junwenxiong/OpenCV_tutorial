@@ -48,7 +48,7 @@ if cv2.waitKey(0) & 0xff == 27:
 
 结果图为：
 
-![dst](C:\Users\xjw\Desktop\dst.png)
+![dst](/resource/dst.png)
 
 ​    
 
