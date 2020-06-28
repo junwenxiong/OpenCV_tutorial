@@ -8,17 +8,17 @@
 
   原始的LBP算子定义于图像中3x3的邻域窗口，取窗口内中心像素的灰度值作为阈值，将8邻域像素的灰度值与其进行比较，若邻域像素值大于中心像素值，则比较结果为1，否则为0。这样邻域内的8个像素点经过比较后可得到8位二进制数，将其按顺序依次排列即可得到中心像素的LBP值。LBP特征值反映了中心像素和其邻域的纹理信息。LBP的取值一共有种，和一副普通的灰度图像类似，因此可将LBP特征以灰度图的形式表达出来。由于LBP特征考虑的是纹理信息，而不包含颜色信息，因此彩色图需转换为灰度图。原始LBP特征的提取过程如下图所示：
 
-![clip_image002](img\clip_image002.jpg)
+![clip_image002](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image002.jpg?raw=true)
 
 
 
 公式定义如下：
 
-![img](.\img\clip_image003.png)
+![img](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image003.png?raw=true)
 
-![img](.\img\clip_image004.png)
+![img](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image004.png?raw=true)
 
-![摘录](.\img\clip_image005.png) **代码插入**
+![摘录](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image005.png?raw=true) **代码插入**
 
 ```c++
 // 原始LBP特征
@@ -51,17 +51,17 @@ void elbp1(Mat& src, Mat& dst)
 
   原始LBP特征考虑的是固定半径范围内的邻域像素，不能满足不同尺寸和频率纹理的需求，当图像的尺寸发生变化时，LBP特征将不能正确编码局部邻域的纹理信息。为了适应不同尺寸的纹理特征，Ojala等人对LBP算子进行了改进，将3x3邻域窗口扩展到任意邻域，并用圆形邻域代替了正方形邻域，改进后的LBP算子允许在半径为R的邻域内有任意多个像素点，从而得到在半径为R的区域内含有P个采样点的LBP算子。
 
-![circular-lbp.png](.\img\clip_image006.png)
+![circular-lbp.png](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image006.png?raw=true)
 
 采样点的坐标可通过以下公式计算：
 
-![img](.\img\clip_image007.png)
+![img](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image007.png?raw=true)
 
-![img](.\img\clip_image008.png)
+![img](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image008.png?raw=true)
 
-![img](.\img\clip_image009.png)
+![img](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image009.png?raw=true)
 
-![img](.\img\clip_image010.png)
+![img](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image010.png?raw=true)
 
  
 
@@ -71,7 +71,7 @@ void elbp1(Mat& src, Mat& dst)
 
  
 
-![Rota-inv-lbp.jpg](.\img\clip_image011.jpg)
+![Rota-inv-lbp.jpg](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image011.jpg?raw=true)
 
 
 
@@ -87,17 +87,17 @@ void elbp1(Mat& src, Mat& dst)
 
    为了解决二进制模式过多的问题，提高统计性，Ojala提出了一种“等价模式（Uniform Pattern）”来对LBP特征的模式种类进行降维。Ojala认为，在实际图像中，绝大多数LBP模式最多只包含两次从0到1或者从1到0跳变。
 
-![重要](.\img\clip_image013.png) 等价模式的定义：当某个LBP所对应的循环二进制数从0到1或者从1到0最多有两次跳变是，该LBP所对应的二进制就是一个等价模式类。如00000000（0次跳变），11000011（2次跳变）都是等价模式类。
+![重要](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image013.png?raw=true) 等价模式的定义：当某个LBP所对应的循环二进制数从0到1或者从1到0最多有两次跳变是，该LBP所对应的二进制就是一个等价模式类。如00000000（0次跳变），11000011（2次跳变）都是等价模式类。
 
 除等价模式类以外的模式都归为一类，称为混合模式类，例如10010111（4次跳变）。
 
 通过改进，二进制模式的种类大大减少，由原来的$2^P$中降为$P(P-1)+2+1$种，其中为2次跳变的模式数，2为0次跳变（全“0”或全“1”）的模式数，1为混合模式的数量，由于是循环二进制数，因此“0”，“1”跳变次数不可能为奇数次。对于3x3邻域内8个采样点来说，二进制模式由原始的256种变为59种。这使得特征向量的维数大大减少，并且可以减少高频噪声带来的影响。
 
-![重要](.\img\clip_image013.png) 实验表明，一般情况下，等价模式的数目占全部模式的90%以上，可以有效对数据进行降维。
+![重要](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image013.png?raw=true) 实验表明，一般情况下，等价模式的数目占全部模式的90%以上，可以有效对数据进行降维。
 
 下图为58种等价模式类：
 
-![uniform LBP.png](.\img\clip_image015.png)
+![uniform LBP.png](https://github.com/woshihaozhu/OpenCV_tutorial/blob/master/Feature%20Detection%20and%20Description/LBP%20Detection/img/clip_image015.png?raw=true)
 
  
 
