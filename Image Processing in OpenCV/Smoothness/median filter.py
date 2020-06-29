@@ -15,13 +15,14 @@ def median_filter(img, kernel_size=5):
     cv2.imshow('median', result)
 
 if __name__ == "__main__":
-    img = cv2.imread('resource\\1.jpg')
-    img_noise = add_noise(img)
-    median_filter(img_noise)
+    img = cv2.imread('resource\\1_sp_noise.jpg')
+    img = cv2.resize(img, (512, 512))
+    # img_noise = add_noise(img)
+    median_filter(img)
     # plt.subplot(1,2,1)
     # plt.imshow(img)
     # plt.show()
 
-    cv2.imshow('img_noise', img_noise)
+    cv2.imshow('img_noise', img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
