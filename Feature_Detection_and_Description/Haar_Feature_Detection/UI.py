@@ -16,6 +16,11 @@ def exit():
 
 root.title('Detections')
 
+Label(root,text="Vechile and Pedestrain Detection Using Haar Cascades", font=("times new roman",20),fg="white",bg="black",height=2).grid(row=0,rowspan=2,columnspan=2,sticky=W+E+N+S,padx=5,pady=5)
+# button car detection
 Button(root, text="Car Detection", font=("times new roman",20),bg="#000000",fg="green",command=function1).grid(row=4,columnspan=2,sticky=W+E+N+S,padx=5,pady=5)
+
+# exit button
+Button(root, text="Exit", font=("times new roman",20),bg="#000000", fg="red", command=exit).grid(row=5,columnspan=2,sticky=W+E+N+S,padx=5,pady=5)
 
 root.mainloop()
