@@ -2,9 +2,9 @@ import cv2
 print('Project Topic: Vehicle Classification')
 print('By Junwen Xiong')
 
-cascade_src = 'Feature Detection and Description\\Haar Feature Detection\\Car Detection\\cars.xml'
+cascade_src = 'Feature_Detection_and_Description\\Haar_Feature_Detection\\Car_Detection\\cars.xml'
 
-video_src = 'Feature Detection and Description\\Haar Feature Detection\\Car Detection\\video.avi'
+video_src = 'Feature_Detection_and_Description\\Haar_Feature_Detection\\Car_Detection\\video.avi'
 
 # 参数可以为设备索引或者是文件名
 cap = cv2.VideoCapture(video_src)
@@ -26,7 +26,7 @@ while True:
         cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,255),2)
     cv2.imshow('video', img)
 
-    if cv2.waitKey(0) == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
         break 
 
 cv2.destroyAllWindows()
